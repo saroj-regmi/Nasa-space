@@ -1,27 +1,24 @@
 import React, { useEffect, useRef } from "react";
 import * as T from "three";
 
-const canvas = document.querySelector("#canvas");
-
-console.log(canvas);
-// setting up the renderer
-const renderer = new T.WebGLRenderer({
-  canvas,
-  antialias: true,
-});
+let canvas, renderer;
 
 let scene;
 let camera;
 
 const setup = () => {
   // setting up the scene
-  T.Scene();
+  canvas = document.querySelector("#canvas");
+  scene = new T.Scene();
   const width = window.innerWidth;
   const height = window.innerHeight;
 
-  camera = T.PerspectiveCamera(45, width / height, 0.01, 1000);
+  camera = new T.PerspectiveCamera(45, width / height, 0.01, 1000);
   camera.position.set(0.7, 0.7, -2);
-
+  renderer = new T.WebGLRenderer({
+    canvas,
+    antialias: true,
+  });
   renderer.setSize(width, height);
   document.body.appendChild(renderer.domElement);
 
@@ -39,6 +36,7 @@ function THREEJS() {
     setup();
     render();
   }, []);
+
   return (
     <>
       <canvas id="canvas"></canvas>
