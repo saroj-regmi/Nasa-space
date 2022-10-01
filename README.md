@@ -4,3 +4,6 @@ Many space station trackers are available online, but they often have limited fe
 
 Users would benefit from an open-source web application that tracks the space station and fully depicts the Earth, the space station orbit, and the Station itself in three dimensions.
 We are trying to solve this probelm by implementing a solution that implements features which were lacking in the previous attempts
+
+
+We are trying to solve this probelm by implementing a solution that implements features which were lacking in the previous attempts
