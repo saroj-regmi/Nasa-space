@@ -1,10 +1,11 @@
 import React from "react";
-import Earth from "../components/earth/Earth";
+
+import THREEJS from "../THREEJS";
 
 function HomePage() {
   return (
     <>
-      <Earth />
+      <THREEJS />
     </>
   );
 }
