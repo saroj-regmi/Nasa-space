@@ -1,12 +1,11 @@
-import * as THREE from "three";
-
 (function () {
   var webglEl = document.getElementById("webgl");
+  // document.querySelector("#canvas");
 
-  // if (!Detector.webgl) {
-  //   Detector.addGetWebGLMessage(webglEl);
-  //   return;
-  // }
+  if (!Detector.webgl) {
+    Detector.addGetWebGLMessage(webglEl);
+    return;
+  }
 
   var width = window.innerWidth,
     height = window.innerHeight;
