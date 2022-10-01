@@ -1,11 +1,11 @@
 import React from "react";
 
-import THREEJS from "../THREEJS";
+// import THREEJS from "../THREEJS";
 
 function HomePage() {
   return (
     <>
-      <THREEJS />
+      {/* <THREEJS /> */}
     </>
   );
 }
