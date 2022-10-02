@@ -6,13 +6,39 @@
 :root {
   --nav-bg: #2c3639;
   --bg: #2c3232;
-  --primary: #0096FF;
+  --primary: #0096ff;
   --btn: #37474b;
 }
 body {
   background-color: var(--bg);
   font-family: "Poppins", sans-serif !important;
 }
-a{
+a {
   text-decoration: none;
 }
+
+.dg.ac {
+  position: relative !important;
+}
+.dg.a {
+  position: absolute !important;
+  top: 83vh !important;
+  right: 0px;
+  cursor: pointer;
+  background-color: var(--bg);
+  width: 250px !important;
+  height: 40px !important;
+  font-size: 15px;
+  font-family: "Poppins", sans-serif !important;
+}
+
+.dg.main .close-button {
+  display: none !important;
+}
+.dg .cr.number{
+  height: 40px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
