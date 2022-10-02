@@ -18,7 +18,6 @@ import * as dat from "dat.gui";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { convertLatLon } from "./calculator";
 
-import * as E from "threex.domevents";
 import { data } from "./countries";
 
 let canvas,
@@ -65,20 +64,14 @@ const gui = new dat.GUI();
 
 const changingData = {
   "One day": 3600,
-  marker: 0,
-  markery: 0,
 };
 gui.add(changingData, "One day", 3600, 86400);
-gui.add(changingData, "marker", 0, 10);
-gui.add(changingData, "markery", 0, 10);
 
 const reducingScale = 10000;
 
 const earthRadius = 6400 / reducingScale;
 const sunRadius = 696340 / reducingScale;
 let light;
-
-let domevents;
 
 const setup = () => {
   // setting up the scene
