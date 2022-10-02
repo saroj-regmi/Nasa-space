@@ -17,7 +17,6 @@ import * as dat from "dat.gui";
 
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { convertLatLon } from "./calculator";
-import capsuleTexture from "./img/cap.jpg";
 
 import * as E from "threex.domevents";
 import { data } from "./countries";
@@ -51,6 +50,16 @@ const color = [
   "#6680B3",
   "#66991A",
 ];
+
+const raycaster = new T.Raycaster();
+const pointer = new T.Vector2();
+
+function onPointerMove(event) {
+  pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+  pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
+}
+
+window.addEventListener("pointermove", onPointerMove);
 
 const gui = new dat.GUI();
 
@@ -97,6 +106,15 @@ const setup = () => {
 
   // domevents = new E.DomEvents(camera, renderer);
 };
+
+function locationHover() {
+  raycaster.setFromCamera(pointer, camera);
+  const intersect = raycaster.intersectObjects(locationObj.children);
+  intersect.forEach((ele, i) => {
+    if (i != 1) return;
+    console.log(ele.object.id);
+  });
+}
 
 function createSphere(radius, segments) {
   const mainMap = new T.TextureLoader().load(image);
@@ -197,6 +215,7 @@ function getLocation(lat, lon, country, colorIndex) {
       color: new Color(color[colorIndex]),
     })
   );
+  capsule.userData = { country, lat, lon };
   // marker.position.set(x, y, z);
   capsule.position.set(x, y, z);
   capsule.rotation.set(0, 0, 0);
@@ -236,6 +255,7 @@ function animate() {
   // if we move the sphere then the location also should be rotated respectively.
   // this will make sure to sync the rotation so that the coordinates do not miss match
   locationObj.rotation.y = earth.rotation.y;
+  locationHover();
 
   render();
   requestAnimationFrame(animate);
@@ -255,10 +275,10 @@ function THREEJS() {
     getSattelite();
     createStars(1000);
     createClouds();
+
     // generates a city for a give coordinate
 
     data.map((elem, index) => {
-      if (index === 1) console.log(elem);
       getLocation(
         parseInt(elem[2]),
         parseInt(elem[3]),
@@ -266,9 +286,9 @@ function THREEJS() {
         Math.floor(Math.random() * 10 + 1)
       );
     });
+    console.log(locationObj.children);
 
     render();
-    console.log(E);
 
     animate();
   }, []);
