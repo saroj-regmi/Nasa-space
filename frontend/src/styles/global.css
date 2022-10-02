@@ -4,11 +4,15 @@
   padding: 0;
 }
 :root {
-  --nav-bg: #0005;
+  --nav-bg: #2c3639;
   --bg: #2c3232;
   --primary: #0096FF;
+  --btn: #37474b;
 }
 body {
   background-color: var(--bg);
   font-family: "Poppins", sans-serif !important;
+}
+a{
+  text-decoration: none;
 }
