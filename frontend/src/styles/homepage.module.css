@@ -21,6 +21,7 @@
   box-shadow: 0px 0px 15px 0 rgba(200, 200, 200, 0.25);
   transition: box-shadow 0.2s ease-in-out;
   cursor: pointer;
+  position: relative;
 }
 
 .buttons button:hover,
@@ -37,4 +38,40 @@
 .buttons button:hover img,
 .buttons button:focus img {
   transform: scale(1.05);
+}
+
+.label {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translateY(-50%);
+  transition: all 0.3s ease-in-out, opacity 0.1s ease-in-out;
+  opacity: 0;
+  color: #fff;
+  background-color: #1d2121;
+  padding: 2px 10px;
+  z-index: -1;
+  height: 25px;
+  min-width: 135px;
+  text-align: left;
+  font-size: 14px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.label::before {
+  content: "";
+  position: absolute;
+  height: 12.5px;
+  left: calc(100% - 7px);
+  transform: rotate(45deg);
+  background-color: #1d2121;
+  width: 12.5px;
+}
+
+button:hover .label,
+button:focus .label {
+  right: 120%;
+  opacity: 1;
 }
