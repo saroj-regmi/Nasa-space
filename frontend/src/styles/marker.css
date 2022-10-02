@@ -1,0 +1,37 @@
+
+.circle,
+.circle2,
+.circle3 {
+  height: 50px;
+  width: 50px;
+  border: 5px solid rgb(140, 75, 0);
+  background-color: rgba(189, 98, 42, 0.523);
+  border-radius: 50%;
+  animation: grow 2s linear infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.circle2 {
+  animation-delay: 0.5s;
+}
+.circle3 {
+  animation-delay: 1s;
+}
+@keyframes grow {
+  1% {
+    opacity: 0;
+    width: 50px;
+    height: 50px;
+  }
+  2% {
+    opacity: 1;
+  }
+  100%,
+  0% {
+    width: 200px;
+    height: 200px;
+    opacity: 0;
+  }
+}

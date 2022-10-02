@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 
+import "./styles/marker.css";
 import * as T from "three";
 import { Color } from "three";
 import image from "./img/map.jpg";
@@ -16,6 +17,11 @@ import * as dat from "dat.gui";
 
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { convertLatLon } from "./calculator";
+import capsuleTexture from "./img/cap.jpg";
+
+import * as E from "threex.domevents";
+import { data } from "./countries";
+
 let canvas,
   renderer,
   scene,
@@ -27,6 +33,24 @@ let canvas,
   sun,
   hamroSatellite,
   earthObj;
+
+const color = [
+  "#FF6633",
+  "#FFB399",
+  "#FF33FF",
+  "#FFFF99",
+  "#00B3E6",
+  "#E6B333",
+  "#3366E6",
+  "#999966",
+  "#99FF99",
+  "#B34D4D",
+  "#80B300",
+  "#809900",
+  "#E6B3B3",
+  "#6680B3",
+  "#66991A",
+];
 
 const gui = new dat.GUI();
 
@@ -40,6 +64,8 @@ const reducingScale = 10000;
 const earthRadius = 6400 / reducingScale;
 const sunRadius = 696340 / reducingScale;
 let light;
+
+let domevents;
 
 const setup = () => {
   // setting up the scene
@@ -68,6 +94,8 @@ const setup = () => {
   light = new T.PointLight(new Color("rgb(253, 241, 174)"), 1);
   light.position.set(-100, 73, 4.2);
   scene.add(light);
+
+  // domevents = new E.DomEvents(camera, renderer);
 };
 
 function createSphere(radius, segments) {
@@ -159,32 +187,40 @@ function getEarth() {
   scene.add(earthObj);
 }
 
-function getLocation(lat, lon) {
+locationObj = new T.Object3D();
+function getLocation(lat, lon, country, colorIndex) {
   let { x, y, z } = convertLatLon(lat, lon, earthRadius);
 
-  locationObj = new T.Object3D();
-
-  let location = new T.Mesh(
-    new T.SphereGeometry(0.05, 50),
-    new T.MeshBasicMaterial({ color: 0xff0000, wireframe: true })
+  const capsule = new T.Mesh(
+    new T.SphereGeometry(0.006, 30, 30),
+    new T.MeshPhongMaterial({
+      color: new Color(color[colorIndex]),
+    })
   );
+  // marker.position.set(x, y, z);
+  capsule.position.set(x, y, z);
+  capsule.rotation.set(0, 0, 0);
 
-  location.position.set(x, y, z);
-  locationObj.add(location);
-  scene.add(locationObj);
+  locationObj.add(capsule);
+
+  // domevents.addEventListener(capsule, "click", () => {
+  //   alert(country);
+  // });
 }
 
 // render this will render the items
 const render = () => {
+  scene.add(locationObj);
   controls.update();
-
   renderer.render(scene, camera);
 };
 
 // this will reinitiate the variable upon resize
 function resizeWindow() {
-  // camera.aspect = window.innerWidth / window.innerHeight;
-  // camera.updateProjectionMatrix();
+  if (camera) {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+  }
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
@@ -201,9 +237,7 @@ function animate() {
   // this will make sure to sync the rotation so that the coordinates do not miss match
   locationObj.rotation.y = earth.rotation.y;
 
-  // changing the x y and z of the earth
-
-  if (light) render();
+  render();
   requestAnimationFrame(animate);
 }
 
@@ -222,10 +256,20 @@ function THREEJS() {
     createStars(1000);
     createClouds();
     // generates a city for a give coordinate
-    // mumbai city
-    getLocation(28.7, 77.8777);
+
+    data.map((elem, index) => {
+      if (index === 1) console.log(elem);
+      getLocation(
+        parseInt(elem[2]),
+        parseInt(elem[3]),
+        elem[0],
+        Math.floor(Math.random() * 10 + 1)
+      );
+    });
 
     render();
+    console.log(E);
+
     animate();
   }, []);
 

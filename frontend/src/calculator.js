@@ -6,6 +6,6 @@ export const convertLatLon = (lat, lon, radius) => {
   let z = radius * Math.sin(phi) * Math.sin(theta);
   let y = radius * Math.cos(phi);
 
-  console.log([x, y, z]);
+  // console.log([x, y, z]);
   return { x, y, z };
 };
