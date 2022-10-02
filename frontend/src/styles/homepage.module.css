@@ -58,6 +58,7 @@
   border-radius: 5px;
   display: flex;
   align-items: center;
+  pointer-events: none;
 }
 
 .label::before {

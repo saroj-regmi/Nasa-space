@@ -4,6 +4,7 @@ import THREEJS from "../THREEJS";
 import Button from "../components/Button";
 
 import styles from "../styles/homepage.module.css";
+import Modal from "../components/Modal";
 
 function HomePage() {
   const buttons = [
@@ -37,6 +38,7 @@ function HomePage() {
           <Button data={button} styles={styles} />
         ))}
       </div>
+      <Modal />
     </div>
   );
 }
