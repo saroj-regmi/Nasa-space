@@ -15,6 +15,7 @@
   align-items: center;
   padding: 10px;
   border-bottom: 1px solid #ccc;
+  cursor: move;
 }
 
 .modalHeader h2 {
