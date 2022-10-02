@@ -1,7 +1,8 @@
 import styles from "../styles/modal.module.css";
 import Draggable from "react-draggable";
+import Content from "./Content";
 
-const Modal = ({ data, setModal }) => {
+const Modal = ({ data, setModal, setQuery }) => {
   const { open, detail } = data;
 
   const { label, description } = detail;
@@ -32,9 +33,12 @@ const Modal = ({ data, setModal }) => {
           </button>
         </div>
         <div className={styles.modalContent}>
-          <p className={styles.description}>{description}</p>
-
-          <button className={styles.find}>Find</button>
+          <Content
+            styles={styles}
+            description={description}
+            label={label}
+            setQuery={setQuery}
+          />
         </div>
       </div>
     </Draggable>

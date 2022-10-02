@@ -30,6 +30,10 @@ function HomePage() {
     detail: "",
   });
 
+  const [query, setQuery] = useState({
+    label: "",
+  });
+
   const handleClick = (button) => {
     setModal({
       open: true,
@@ -50,7 +54,7 @@ function HomePage() {
             onClick={() => handleClick(button)}
           />
         ))}
-        <Modal data={modal} setModal={setModal} />
+        <Modal data={modal} setModal={setModal} setQuery={setQuery} />
       </div>
     </div>
   );
