@@ -67,7 +67,8 @@ const Location = ({ text, setText, styles, setQuery }) => {
             </div>
           ) : (
             <p className={styles.description}>
-              You need to enter a time to find out when the location of the ISS.
+              You need to enter a time to find out the location of the ISS at
+              that time.
             </p>
           )}
           {clicked ? (
