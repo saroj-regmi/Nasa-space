@@ -23,6 +23,8 @@ a {
 .dg.a {
   top: 70vh !important;
   position: absolute !important;
+  top: 85vh !important;
+
   right: 0px;
   cursor: pointer;
   background-color: var(--bg);

@@ -114,3 +114,11 @@
   place-items: center;
   margin-bottom: 15px;
 }
+
+.data {
+  font-size: 1rem;
+}
+
+.data span {
+  font-weight: bold;
+}
