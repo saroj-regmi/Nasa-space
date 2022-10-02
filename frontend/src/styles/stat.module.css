@@ -12,6 +12,7 @@
   display: flex;
   gap:3px;
   flex-direction: column;
+  transition: 0.2s;
 }
 .stat_container p {
   color: rgb(214, 214, 214);
@@ -22,4 +23,8 @@
   color: rgb(214, 214, 214);
   font-family: "Oxanium", cursive;
   font-weight: 400;
+}
+.stat_container:hover,
+.stat_container:focus {
+  box-shadow: 0px 0px 15px 3px rgba(200, 200, 200, 0.3);
 }
