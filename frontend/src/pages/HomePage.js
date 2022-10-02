@@ -33,7 +33,7 @@ function HomePage() {
   return (
     <div className={styles.conatiner}>
       <THREEJS />
-      <Stat />
+      {/* <Stat /> */}
       <div className={styles.buttons}>
         {buttons.map((button) => (
           <Button data={button} styles={styles} key={button.label} />

@@ -1,11 +1,11 @@
-export const convertLatLon = (lat, lon) => {
-  let aLat = (lat * Math.PI) / 180;
-  let aLon = (lon * Math.PI) / 180;
-  let R = 0.5834132413;
+export const convertLatLon = (lat, lon, radius) => {
+  var phi = (90 - lat) * (Math.PI / 180);
+  var theta = (lon + 180) * (Math.PI / 180);
 
-  return {
-    x: Math.sin(aLon) * Math.cos(aLat) * R,
-    y: Math.sin(aLat) * R,
-    z: Math.cos(aLon) * Math.cos(aLat) * R,
-  };
+  let x = -(radius * Math.sin(phi) * Math.cos(theta));
+  let z = radius * Math.sin(phi) * Math.sin(theta);
+  let y = radius * Math.cos(phi);
+
+  console.log([x, y, z]);
+  return { x, y, z };
 };
