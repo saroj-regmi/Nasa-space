@@ -30,9 +30,15 @@ function HomePage() {
     detail: "",
   });
 
-  const [query, setQuery] = useState({
-    label: "",
-  });
+  const [details, setDetails] = useState({});
+
+  const setQuery = (latitude, longitude, altitude) => {
+    // trigger the satellite location here
+    setDetails({ latitude, longitude, altitude });
+
+    console.log(latitude, longitude, altitude);
+    console.log(details);
+  };
 
   const handleClick = (button) => {
     setModal({
