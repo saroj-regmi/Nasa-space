@@ -20,12 +20,13 @@ a {
 .dg.ac {
   /* position: relative !important; */
   /* outline: 1px solid red; */
-  height: 80vh !important;
+  /* height: 80vh !important; */
   /* pointer-events: none; */
-  display: flex;
+  /* display: flex;
 
   align-items: flex-end;
   justify-content: right;
+  pointer-events: none; */
 }
 .dg.a {
   position: absolute !important;

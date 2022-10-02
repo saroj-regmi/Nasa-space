@@ -65,17 +65,12 @@ const gui = new dat.GUI();
 
 const changingData = {
   "One day": 3600,
-
-  x: 0,
-  y: 0,
-  z: 0,
-  fov: 100,
+  marker: 0,
+  markery: 0,
 };
 gui.add(changingData, "One day", 3600, 86400);
-gui.add(changingData, "x", -10, 10);
-gui.add(changingData, "y", -10, 10);
-gui.add(changingData, "z", -10, 10);
-gui.add(changingData, "fov", -10, 10);
+gui.add(changingData, "marker", 0, 10);
+gui.add(changingData, "markery", 0, 10);
 
 const reducingScale = 10000;
 
@@ -267,8 +262,6 @@ function animate() {
   // this will make sure to sync the rotation so that the coordinates do not miss match
   locationObj.rotation.y = earth.rotation.y;
   locationHover();
-
-  camera.position.set(changingData.x, changingData.y, changingData.z);
 
   render();
   requestAnimationFrame(animate);
