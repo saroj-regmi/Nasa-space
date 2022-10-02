@@ -65,8 +65,17 @@ const gui = new dat.GUI();
 
 const changingData = {
   "One day": 3600,
+
+  x: 0,
+  y: 0,
+  z: 0,
+  fov: 100,
 };
 gui.add(changingData, "One day", 3600, 86400);
+gui.add(changingData, "x", -10, 10);
+gui.add(changingData, "y", -10, 10);
+gui.add(changingData, "z", -10, 10);
+gui.add(changingData, "fov", -10, 10);
 
 const reducingScale = 10000;
 
@@ -244,6 +253,8 @@ function resizeWindow() {
 }
 
 let rotation = 0;
+let marker;
+
 // this is for animating the stuffs
 function animate() {
   // this will rerender continuously for creating a animation
@@ -257,6 +268,8 @@ function animate() {
   locationObj.rotation.y = earth.rotation.y;
   locationHover();
 
+  camera.position.set(changingData.x, changingData.y, changingData.z);
+
   render();
   requestAnimationFrame(animate);
 }
@@ -266,7 +279,7 @@ function animate() {
 // looking for window resize
 window.addEventListener("resize", resizeWindow);
 
-function THREEJS() {
+function THREEJS({ states: { latitude, longitude } }) {
   useEffect(() => {
     //  setsup the three js screen for us
     setup();
@@ -292,6 +305,33 @@ function THREEJS() {
 
     animate();
   }, []);
+  useEffect(() => {
+    if (!camera || !latitude || !longitude) return;
+    const { x, y, z } = convertLatLon(
+      parseInt(latitude),
+      parseInt(longitude),
+      earthRadius
+    );
+
+    new GLTFLoader().load("/scene.gltf", (model) => {
+      marker = model.scene;
+      const scale = 0.01;
+      // model.scene.position.set(0.1, 0.7, 0.2);
+      model.scene.scale.set(scale, scale, scale);
+
+      // model.scene.castShadow(true);
+
+      // model.scene.position.z = 1;
+      model.scene.position.set(x, y, z + 0.03);
+      model.scene.rotateX = 0;
+      model.scene.rotateY = 1;
+
+      locationObj.add(model.scene);
+    });
+    scene.add(locationObj);
+
+    camera.position.set(x, y, z);
+  }, [latitude, longitude]);
 
   return (
     <>

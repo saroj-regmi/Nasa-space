@@ -36,8 +36,8 @@ function HomePage() {
     // trigger the satellite location here
     setDetails({ latitude, longitude, altitude });
 
-    console.log(latitude, longitude, altitude);
-    console.log(details);
+    // console.log(latitude, longitude, altitude);
+    // console.log(details);
   };
 
   const handleClick = (button) => {
@@ -49,7 +49,7 @@ function HomePage() {
 
   return (
     <div className={styles.conatiner}>
-      <THREEJS />
+      <THREEJS states={details} />
       <Stat />
       <div className={styles.buttons}>
         {buttons.map((button) => (

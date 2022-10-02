@@ -18,11 +18,19 @@ a {
 }
 
 .dg.ac {
-  position: relative !important;
+  /* position: relative !important; */
+  /* outline: 1px solid red; */
+  height: 80vh !important;
+  /* pointer-events: none; */
+  display: flex;
+
+  align-items: flex-end;
+  justify-content: right;
 }
 .dg.a {
   position: absolute !important;
-  top: 83vh !important;
+  /* top: 0 !important; */
+
   right: 0px;
   cursor: pointer;
   background-color: var(--bg);
@@ -35,10 +43,9 @@ a {
 .dg.main .close-button {
   display: none !important;
 }
-.dg .cr.number{
+.dg .cr.number {
   height: 40px !important;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
