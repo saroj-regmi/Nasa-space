@@ -26,11 +26,7 @@ const Location = ({ text, setText, styles, setQuery }) => {
     const { latitude, longitude, altitude } = data;
 
     console.log(data);
-    setQuery({
-      latitude,
-      longitude,
-      altitude,
-    });
+    setQuery(latitude, longitude, altitude);
 
     // return a time after which the ISS will be overhead
     setText("The ISS location is mapped to the following coordinates: ");
