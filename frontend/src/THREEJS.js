@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+
 import * as T from "three";
 import { Color } from "three";
 import image from "./img/map.jpg";
@@ -7,10 +8,12 @@ import stars from "./img/galaxy_starfield.png";
 import bMap from "./img/elev_bump_4k.jpg";
 import Wmap from "./img/water_4k.png";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import * as dat from "dat.gui";
 
 // for importing the 3d model
 
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { convertLatLon } from "./calculator";
 let canvas, renderer;
 
 let scene;
@@ -18,7 +21,22 @@ let camera;
 
 let earth;
 let controls;
+let satelliteObj;
+let locationObj;
+
 let hamroSatellite;
+
+const gui = new dat.GUI();
+
+const changingData = {
+  "One day": 3600,
+};
+
+gui.add(changingData, "One day", 60, 86400);
+
+const reducingScale = 100000;
+
+const earthRadius = 64000 / reducingScale;
 
 const setup = () => {
   // setting up the scene
@@ -72,12 +90,14 @@ function createSphere(radius, segments) {
 
 function createStars(radius) {
   const texture = new T.TextureLoader().load(stars);
-  return new T.Mesh(
-    new T.BoxGeometry(radius, radius, radius),
-    new T.MeshBasicMaterial({
-      map: texture,
-      side: T.BackSide,
-    })
+  scene.add(
+    new T.Mesh(
+      new T.BoxGeometry(radius, radius, radius),
+      new T.MeshBasicMaterial({
+        map: texture,
+        side: T.BackSide,
+      })
+    )
   );
 }
 
@@ -96,39 +116,65 @@ function resizeWindow() {
 }
 
 function getSattelite() {
+  satelliteObj = new T.Object3D();
+
   new GLTFLoader().load("/hamro_s.glb", (model) => {
     hamroSatellite = model;
-    const scale = 0.0007;
+    const scale = 108 / reducingScale;
     // model.scene.position.set(0.1, 0.7, 0.2);
     model.scene.scale.set(scale, scale, scale);
-    console.log();
+
     // model.scene.castShadow(true);
 
     model.scene.position.x = 1;
-    earth.add(model.scene);
+    satelliteObj.add(model.scene);
     model.scene.rotateY += rotation;
   });
+  scene.add(satelliteObj);
 }
 let rotation = 0;
 // this is for animating the stuffs
 function animate() {
   // this will rerender continuously for creating a animation
 
-  earth.rotation.y += 0.005;
+  earth.rotation.y += earthRadius / changingData["One day"];
+  satelliteObj.rotation.y += (earthRadius / changingData["One day"]) * 16;
+
+  // if we move the sphere then the location also should be rotated respectively.
+
+  // this will make sure to sync the rotation so that the coordinates do not miss match
+  locationObj.rotation.y = earth.rotation.y;
 
   render();
   requestAnimationFrame(animate);
 }
 
 function getEarth() {
-  earth = createSphere(0.5834132413, 60);
+  earth = createSphere(earthRadius, 60);
   earth.rotation.z = 0;
-  earth.rotation.x = -0.4;
-  earth.rotation.y = 0;
+  earth.rotation.x = 0;
+  earth.rotation.y = -Math.PI / 2;
 
   scene.add(earth);
-  scene.add(createStars(10));
 }
+
+// generating a marker for the city and adding it
+
+function getLocation(lat, lon) {
+  let { x, y, z } = convertLatLon(lat, lon);
+
+  locationObj = new T.Object3D();
+
+  let location = new T.Mesh(
+    new T.SphereGeometry(0.05, 50),
+    new T.MeshBasicMaterial({ color: 0xff0000, wireframe: true })
+  );
+
+  location.position.set(x, y, z + 0.1);
+  locationObj.add(location);
+  scene.add(locationObj);
+}
+
 // looking for window resize
 window.addEventListener("resize", resizeWindow);
 
@@ -138,6 +184,11 @@ function THREEJS() {
     setup();
     getEarth();
     getSattelite();
+    createStars(10);
+    // generates a city for a give coordinate
+    // mumbai city
+    getLocation(28.7, 77.8777);
+
     render();
     animate();
   }, []);
