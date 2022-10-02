@@ -1,5 +1,5 @@
 import React from "react";
-
+import Stat from "../components/Stat";
 import THREEJS from "../THREEJS";
 import Button from "../components/Button";
 
@@ -33,6 +33,7 @@ function HomePage() {
   return (
     <div className={styles.conatiner}>
       <THREEJS />
+      <Stat/>
       <div className={styles.buttons}>
         {buttons.map((button, index) => (
           <Button data={button} styles={styles} />

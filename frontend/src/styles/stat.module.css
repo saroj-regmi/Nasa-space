@@ -1,0 +1,25 @@
+.stat_container {
+  position: absolute;
+  z-index: 1;
+  background-color: var(--bg);
+  width: fit-content;
+  height: fit-content;
+  border-radius: 8px;
+  top: 90px;
+  right: 20px;
+  padding:10px;
+  cursor: pointer;
+  display: flex;
+  gap:3px;
+  flex-direction: column;
+}
+.stat_container p {
+  color: rgb(214, 214, 214);
+  font-family: "Oxanium", cursive;
+  font-weight: 200;
+}
+.stat_container span {
+  color: rgb(214, 214, 214);
+  font-family: "Oxanium", cursive;
+  font-weight: 400;
+}
