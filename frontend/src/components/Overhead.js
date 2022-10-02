@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Loader from "./Loader";
 
-const Overhead = ({ text, setText, styles, setQuery, label }) => {
+const Overhead = ({ text, setText, styles }) => {
   const [lat, setLat] = useState(0);
   const [lon, setLon] = useState(0);
   const [clicked, setClicked] = useState(false);
@@ -10,11 +10,6 @@ const Overhead = ({ text, setText, styles, setQuery, label }) => {
 
   const calculateTime = () => {
     setLoding(true);
-    setQuery({
-      label,
-      latitude: lat,
-      longitude: lon,
-    });
 
     // return a time after which the ISS will be overhead
     setTime(new Date().toLocaleTimeString());
