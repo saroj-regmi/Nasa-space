@@ -32,20 +32,8 @@ const gui = new dat.GUI();
 
 const changingData = {
   "One day": 3600,
-  earthX: 0,
-  earthY: 0,
-  earthZ: 0,
-  cameraX: 0,
-  cameraY: 0,
-  cameraZ: 1.5,
 };
-// gui.add(changingData, "One day", 60, 86400);
-// gui.add(changingData, "earthX", -1000, 1000);
-// gui.add(changingData, "earthY", -1000, 1000);
-// gui.add(changingData, "earthZ", -1000, 100);
-gui.add(changingData, "cameraX", -100, 100);
-gui.add(changingData, "cameraY", -100, 100);
-gui.add(changingData, "cameraZ", -100, 100);
+gui.add(changingData, "One day", 3600, 86400);
 
 const reducingScale = 10000;
 
@@ -207,8 +195,8 @@ function animate() {
 
   earth.rotation.y += earthRadius / changingData["One day"];
   satelliteObj.rotation.y += (earthRadius / changingData["One day"]) * 16;
-  clouds.rotation.y += earthRadius / changingData["One day"] + 0.001;
-  clouds.rotation.x += earthRadius / changingData["One day"] + 0.0001;
+  clouds.rotation.y += earthRadius / changingData["One day"] + 0.00001;
+  clouds.rotation.x += earthRadius / changingData["One day"] + 0.000001;
   // if we move the sphere then the location also should be rotated respectively.
   // this will make sure to sync the rotation so that the coordinates do not miss match
   locationObj.rotation.y = earth.rotation.y;

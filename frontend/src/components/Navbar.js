@@ -9,7 +9,7 @@ const Navbar = () => {
         <Link to="/">
           <div className={styles.logo_wrapper}>
             <FaSatelliteDish className={styles.logo} />
-            <span>Name</span>
+            <span>Hamro Earth</span>
           </div>
         </Link>
       </div>
