@@ -3,11 +3,14 @@ import * as T from "three";
 import { Color } from "three";
 import image from "./img/map.jpg";
 import styles from "./styles/earth.module.css";
-import stars from "./img/test.webp";
+import stars from "./img/galaxy_starfield.png";
 import bMap from "./img/elev_bump_4k.jpg";
 import Wmap from "./img/water_4k.png";
-import { TrackballControls } from "three/examples/jsm/controls/TrackballControls.js";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
+// for importing the 3d model
+
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 let canvas, renderer;
 
 let scene;
@@ -15,6 +18,7 @@ let camera;
 
 let earth;
 let controls;
+let hamroSatellite;
 
 const setup = () => {
   // setting up the scene
@@ -24,14 +28,16 @@ const setup = () => {
   const height = window.innerHeight;
 
   camera = new T.PerspectiveCamera(100, width / height, 0.01, 1000);
-  camera.position.set(0, 0, 1);
+  camera.position.set(0, 0, 1.5);
   renderer = new T.WebGLRenderer({
     canvas,
     antialias: true,
   });
 
-  controls = new TrackballControls(camera, renderer.domElement);
-
+  controls = new OrbitControls(camera, renderer.domElement);
+  // blocking the y control for the rotation.
+  // controls.minPolarAngle = Math.PI / 2;
+  // controls.maxPolarAngle = Math.PI / 2;
   renderer.setSize(width, height);
 
   document.body.appendChild(renderer.domElement);
@@ -50,6 +56,7 @@ function createSphere(radius, segments) {
 
   return new T.Mesh(
     new T.SphereGeometry(radius, segments, segments),
+    // new T.BoxGeometry(1, 1, 1),
 
     new T.MeshPhongMaterial({
       map: mainMap,
@@ -61,14 +68,24 @@ function createSphere(radius, segments) {
   );
 }
 
+// creating a big sphere to make the stars in the background
+
+function createStars(radius) {
+  const texture = new T.TextureLoader().load(stars);
+  return new T.Mesh(
+    new T.BoxGeometry(radius, radius, radius),
+    new T.MeshBasicMaterial({
+      map: texture,
+      side: T.BackSide,
+    })
+  );
+}
+
 // render this will render the items
 const render = () => {
-  // this will rerender continuously for creating a animation
-  earth.rotation.y += 0.0005;
   controls.update();
 
   renderer.render(scene, camera);
-  requestAnimationFrame(render);
 };
 
 // this will reinitiate the variable upon resize
@@ -78,6 +95,40 @@ function resizeWindow() {
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
+function getSattelite() {
+  new GLTFLoader().load("/hamro_s.glb", (model) => {
+    hamroSatellite = model;
+    const scale = 0.0007;
+    // model.scene.position.set(0.1, 0.7, 0.2);
+    model.scene.scale.set(scale, scale, scale);
+    console.log();
+    // model.scene.castShadow(true);
+
+    model.scene.position.x = 1;
+    earth.add(model.scene);
+    model.scene.rotateY += rotation;
+  });
+}
+let rotation = 0;
+// this is for animating the stuffs
+function animate() {
+  // this will rerender continuously for creating a animation
+
+  earth.rotation.y += 0.005;
+
+  render();
+  requestAnimationFrame(animate);
+}
+
+function getEarth() {
+  earth = createSphere(0.5834132413, 60);
+  earth.rotation.z = 0;
+  earth.rotation.x = -0.4;
+  earth.rotation.y = 0;
+
+  scene.add(earth);
+  scene.add(createStars(10));
+}
 // looking for window resize
 window.addEventListener("resize", resizeWindow);
 
@@ -85,11 +136,10 @@ function THREEJS() {
   useEffect(() => {
     //  setsup the three js screen for us
     setup();
-    earth = createSphere(0.5834132413, 60);
-    scene.add(earth);
-    scene.background = new T.TextureLoader().load(stars);
-
+    getEarth();
+    getSattelite();
     render();
+    animate();
   }, []);
 
   return (

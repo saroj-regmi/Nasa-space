@@ -1,0 +1,14 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+:root {
+  --nav-bg: #0005;
+  --bg: #2c3232;
+  --primary: #0096FF;
+}
+body {
+  background-color: var(--bg);
+  font-family: "Poppins", sans-serif !important;
+}

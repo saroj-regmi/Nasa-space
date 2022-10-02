@@ -1,0 +1,29 @@
+.nav_container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 70px;
+    background-color: var(--nav-bg);
+    box-shadow: 0 0 10px #0000001a;
+    padding-inline: 30px;
+}
+.logo_wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:8px;
+    cursor: pointer;
+}
+.logo{
+    background-color: var(--primary);
+    font-size: 38px;
+    border-radius: 6px;
+    padding: 6px;
+    color: #fff;
+}
+.logo_wrapper span{
+    font-size: 24px;
+    color: white;
+    font-weight: 600;
+    font-family:"Poppins", sans-serif;
+}
