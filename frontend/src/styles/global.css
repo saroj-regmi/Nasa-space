@@ -21,6 +21,7 @@ a {
   position: relative !important;
 }
 .dg.a {
+  top: 70vh !important;
   position: absolute !important;
   top: 85vh !important;
 
