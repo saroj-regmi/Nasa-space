@@ -4,7 +4,7 @@ import Draggable from "react-draggable";
 const Modal = ({ data, setModal }) => {
   const { open, detail } = data;
 
-  const { label, img } = detail;
+  const { label, description } = detail;
 
   const handleClose = () => {
     setModal({
@@ -31,7 +31,11 @@ const Modal = ({ data, setModal }) => {
             X
           </button>
         </div>
-        <div className={styles.modalContent}></div>
+        <div className={styles.modalContent}>
+          <p className={styles.description}>{description}</p>
+
+          <button className={styles.find}>Find</button>
+        </div>
       </div>
     </Draggable>
   );

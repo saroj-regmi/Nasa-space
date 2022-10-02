@@ -11,14 +11,17 @@ function HomePage() {
     {
       label: "Satellite overhead",
       img: "/svgs/overhead.svg",
+      description: "Find the time when the ISS will fly over your location",
     },
     {
       label: "Time Difference",
       img: "/svgs/timedifference.svg",
+      description: "Find the time difference between two your time and ISS",
     },
     {
       label: "Satellite location",
       img: "/svgs/searchlocation.svg",
+      description: "Find the location of the ISS at a given time",
     },
   ];
 
