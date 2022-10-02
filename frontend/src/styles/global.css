@@ -18,20 +18,11 @@ a {
 }
 
 .dg.ac {
-  /* position: relative !important; */
-  /* outline: 1px solid red; */
-  /* height: 80vh !important; */
-  /* pointer-events: none; */
-  /* display: flex;
-
-  align-items: flex-end;
-  justify-content: right;
-  pointer-events: none; */
+  position: relative !important;
 }
 .dg.a {
+  top: 70vh !important;
   position: absolute !important;
-  /* top: 0 !important; */
-
   right: 0px;
   cursor: pointer;
   background-color: var(--bg);
